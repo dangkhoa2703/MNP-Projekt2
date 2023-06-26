@@ -43,6 +43,8 @@ public class Scheduler extends AbstractBehavior<Scheduler.Message> {
                 }
                 task.tasks.tell(new Tasks.WorkerListMsg(workerList));
                 totalCurrentWorker += neededWorker;
+                System.out.println("Created " + neededWorker + " new workers");
+                System.out.println("total current workers: " + totalCurrentWorker);
             }
         }
     }
@@ -59,15 +61,15 @@ public class Scheduler extends AbstractBehavior<Scheduler.Message> {
     public Behavior<Message> onWorkerNumMsg(WorkerNumMsg msg) {
         taskList.add(new Task(msg.workerNum,msg.tasks));
         checkAvailability();
-//        getContext().getLog().info("Received needed worker num {}, total current workers: {}",msg.workerNum,totalCurrentWorker);
+        getContext().getLog().info("Received needed worker num {}, total current workers: {}",msg.workerNum,totalCurrentWorker);
         return this;
     }
 
     // decrease total of current worker by 1 when receive a signal from workers
     public Behavior<Message> onJobSuccess(JobSuccessMsg msg) {
         totalCurrentWorker -= 1;
+        getContext().getLog().info("Job done,total current workers: {}",totalCurrentWorker);
         checkAvailability();
-//        getContext().getLog().info("Job done,total current workers: {}",totalCurrentWorker);
         return this;
     }
 }

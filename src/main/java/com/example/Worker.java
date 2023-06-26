@@ -56,7 +56,7 @@ public class Worker extends AbstractBehavior<Worker.Message> {
         result += msg.num;
         msg.multiplyWorker.tell(new ToMultiplyMsg(result));
         scheduler.tell( new Scheduler.JobSuccessMsg());
-//        getContext().getLog().info("Increasing job success");
+        getContext().getLog().info("Increasing job success");
         return Behaviors.stopped();
     }
 
@@ -67,7 +67,7 @@ public class Worker extends AbstractBehavior<Worker.Message> {
         if( counter == total ){
             tasks.tell( new Tasks.ResultMsg(result));
             scheduler.tell( new Scheduler.JobSuccessMsg());
-//            getContext().getLog().info("Multiply job success");
+            getContext().getLog().info("Multiply job success");
             return Behaviors.stopped();
         }else return this;
     }
