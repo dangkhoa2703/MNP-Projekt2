@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Scheduler extends AbstractBehavior<Scheduler.Message> {
 
-    public interface Message {};
+    public interface Message {}
 
     // receive a total number of worker which is needed for a job and the address of the task
     public record WorkerNumMsg(int workerNum, ActorRef<Tasks.Message> tasks) implements Message{}
@@ -24,8 +24,8 @@ public class Scheduler extends AbstractBehavior<Scheduler.Message> {
     }
 
     int totalCurrentWorker = 0;
-    private record Task( int numOfWorker, ActorRef<Tasks.Message> tasks) {};
-    ArrayList<Task> taskList = new ArrayList<Task>();
+    private record Task( int numOfWorker, ActorRef<Tasks.Message> tasks) {}
+    ArrayList<Task> taskList = new ArrayList<>();
 
     private Scheduler(ActorContext<Message> context) {
         super(context);
@@ -37,14 +37,13 @@ public class Scheduler extends AbstractBehavior<Scheduler.Message> {
             int neededWorker = taskList.get(0).numOfWorker;
             if (20 - totalCurrentWorker >= neededWorker) {
                 Task task = taskList.remove(0);
-                ArrayList<ActorRef<Worker.Message>> workerList = new ArrayList<ActorRef<Worker.Message>>();
+                ArrayList<ActorRef<Worker.Message>> workerList = new ArrayList<>();
                 for (int i = 0; i < task.numOfWorker; i++) {
                     workerList.add(getContext().spawnAnonymous(Worker.create(getContext().getSelf())));
                 }
                 task.tasks.tell(new Tasks.WorkerListMsg(workerList));
                 totalCurrentWorker += neededWorker;
-                System.out.println("Created " + neededWorker + " new workers");
-                System.out.println("total current workers: " + totalCurrentWorker);
+                System.out.println("Created " + neededWorker + " new workers, total current workers: " + totalCurrentWorker);
             }
         }
     }
@@ -60,8 +59,8 @@ public class Scheduler extends AbstractBehavior<Scheduler.Message> {
     // when receive the needed number of workers from Tasks, add it to taskList
     public Behavior<Message> onWorkerNumMsg(WorkerNumMsg msg) {
         taskList.add(new Task(msg.workerNum,msg.tasks));
+        getContext().getLog().info("Received needed worker num {}",msg.workerNum);
         checkAvailability();
-        getContext().getLog().info("Received needed worker num {}, total current workers: {}",msg.workerNum,totalCurrentWorker);
         return this;
     }
 
