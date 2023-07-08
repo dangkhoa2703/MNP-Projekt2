@@ -8,6 +8,8 @@ import java.util.Random;
 
 // Minh Hieu Le, 222117
 // Lars Klichta, 232078
+// Dang Khoa Nguyen, 214267
+// Tran Long Huynh, 236582
 
 public class AkkaMainSystem extends AbstractBehavior<AkkaMainSystem.Create> {
 
