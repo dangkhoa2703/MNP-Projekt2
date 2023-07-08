@@ -7,6 +7,7 @@ import akka.actor.typed.javadsl.*;
 import java.util.Random;
 
 // Minh Hieu Le, 222117
+// Lars Klichta, 232078
 
 public class AkkaMainSystem extends AbstractBehavior<AkkaMainSystem.Create> {
 

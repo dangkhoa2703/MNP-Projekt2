@@ -10,6 +10,7 @@ import akka.actor.typed.javadsl.Receive;
 import java.util.ArrayList;
 
 // Minh Hieu Le, 222117
+// Lars Klichta, 232078
 
 public class Scheduler extends AbstractBehavior<Scheduler.Message> {
 

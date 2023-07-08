@@ -5,6 +5,7 @@ import akka.actor.typed.Behavior;
 import akka.actor.typed.javadsl.*;
 
 // Minh Hieu Le, 222117
+// Lars Klichta, 232078
 
 public class Worker extends AbstractBehavior<Worker.Message> {
 
